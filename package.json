@@ -4,12 +4,15 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/qrcode-terminal": "^0.12.2"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@ctrl/transmission": "^7.2.0"
+    "@ctrl/transmission": "^7.2.0",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.27.0"
   }
 }
