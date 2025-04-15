@@ -24,6 +24,7 @@ export async function checkTorrentStatus(data?: Array<Torrent>) {
 
             if (torrent.status !== current.status) {
                 if (current.status === 6) {
+                    transmission.removeTorrent(torrent.id, false);
                     sendMessage(`Download Finished: ${torrent.name}`);
                 } else {
                     sendMessage(`Status changed: ${torrent.name} from ${torrent.status} to ${current.status}`);
