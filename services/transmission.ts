@@ -13,18 +13,34 @@ export async function checkTorrentStatus(data?: Array<Torrent>) {
     const response: GetTorrentRepsonse = await transmission.listTorrents()
     const torrents: Array<Torrent> = response.arguments.torrents;
 
-    if (data) {
+ if (data) {
+        // Track old torrent IDs
+        const oldIDs = new Set(data.map(t => t.id));
+
+        // Detect status changes and finished downloads
         data.forEach((torrent) => {
-            const findID = (x: Torrent) => x.id == torrent.id
-            const index = torrents.findIndex((findID))
+            const current = torrents.find(x => x.id === torrent.id);
+            if (!current) return;
 
-            if (torrent.status !== data[index]?.status) {
-                const messageContents = `Changed Torrent: ${torrent.name} ${torrent.status}`
-                sendMessage(messageContents)
+            if (torrent.status !== current.status) {
+                if (current.status === 6) {
+                    sendMessage(`Download Finished: ${torrent.name}`);
+                } else {
+                    sendMessage(`Status changed: ${torrent.name} from ${torrent.status} to ${current.status}`);
+                }
             }
-        })
-    }
 
+            if (!torrent.isFinished && current.isFinished) {
+                sendMessage(`Download Finished: ${torrent.name}`);
+            }
+        });
+
+        // Detect newly added torrents
+        const newTorrents = torrents.filter(t => !oldIDs.has(t.id));
+        newTorrents.forEach(t => {
+            sendMessage(`New Torrent Added: ${t.name} (ID: ${t.id})`);
+        });
+    }
 
     setTimeout(checkTorrentStatus, 10000, torrents)
 }
