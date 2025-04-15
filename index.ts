@@ -1,4 +1,6 @@
 import { Client, LocalAuth } from "whatsapp-web.js";
+import { transmission } from "./services/transmission";
+import type { GetTorrentRepsonse, Torrent } from "@ctrl/transmission";
 // import * as qrcode from "qrcode-terminal";
 
 export const client = new Client({
@@ -15,9 +17,9 @@ client.on('ready', () => {
 //     qrcode.generate(qr, { small: true })
 // })
 
-client.on('ready', () => {
-    const contactIDs = ['5926002376@c.us', "5926576607@c.us"];
-    
+client.on('ready', async () => {
+    const contactIDs = process.env.ADMIN_NUMBERS?.split(',') || [];
+
     contactIDs.forEach((contactId) => {
         client.sendMessage(contactId, "Bot is ready!");
     })
