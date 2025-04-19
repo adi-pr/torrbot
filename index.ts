@@ -44,7 +44,8 @@ client.on('message', async (message) => {
         message.reply('Unrecognized user. Please contact the admin.');
 
         // Notifdy admin about unauthorized access attempt
-        const adminMessage = `Unauthorized access attempt detected from ${message.from} (${message.deviceType}) at ${message.timestamp}.\n\nMessage: ${message.body}`;
+        const timestamp = new Date(message.timestamp * 1000).toLocaleString("en-US", { timeZone: "America/Guyana" });
+        const adminMessage = `Unauthorized access attempt detected from ${message.from} (${message.deviceType}) at ${timestamp}.\n\nMessage: ${message.body}`;
         sendMessage(adminMessage);
     }
 });
