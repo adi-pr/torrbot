@@ -9,7 +9,6 @@ export const transmission = new Transmission({
 });
 
 export async function checkTorrentStatus(data?: Array<Torrent>) {
-    console.log("Checking for change")
     const response: GetTorrentRepsonse = await transmission.listTorrents()
     const torrents: Array<Torrent> = response.arguments.torrents;
 
@@ -43,5 +42,5 @@ export async function checkTorrentStatus(data?: Array<Torrent>) {
         });
     }
 
-    setTimeout(checkTorrentStatus, 10000, torrents)
+    setTimeout(checkTorrentStatus, 5000, torrents)
 }
