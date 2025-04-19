@@ -1,5 +1,6 @@
 import { Client, LocalAuth } from "whatsapp-web.js";
 import { checkTorrentStatus } from "./services/transmission";
+import { runCommand } from "./utils/runCommand";
 // import * as qrcode from "qrcode-terminal";
 
 export const client = new Client({
@@ -38,7 +39,7 @@ client.on('message', async (message) => {
 
     if (adminContactIDs.includes(message.from)) {
         if (content.startsWith('!')) {
-            message.reply('Command received: ' + content);
+            runCommand(content, message, client)
         }
     } else {
         message.reply('Unrecognized user. Please contact the admin.');
