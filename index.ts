@@ -39,7 +39,7 @@ client.on('message', async (message) => {
 
     if (adminContactIDs.includes(message.from)) {
         if (content.startsWith('!')) {
-            runCommand(content, message, client)
+            runCommand(content, client, message)
         }
     } else {
         message.reply('Unrecognized user. Please contact the admin.');

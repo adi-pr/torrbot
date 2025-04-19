@@ -1,6 +1,6 @@
 import type { Client, Message } from "whatsapp-web.js";
 
-export async function runCommand(input: string, message: Message, client: Client) {
+export async function runCommand(input: string, client: Client, message: Message) {
     const [rawCommand, ...argStrings] = input.split(' ');
     const command = rawCommand && rawCommand.startsWith('!') ? rawCommand.slice(1) : rawCommand || '';
     
